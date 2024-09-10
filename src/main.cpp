@@ -8,10 +8,16 @@
 int packet_count = 0; // 总的流量包
 int tcp_packet_count = 0; // tcp协议的流量包总量
 int udp_packet_count = 0; // udp协议的流量包总量
+int dns_packet_count = 0; // dns协议的流量包总量
+int commod = 0; // 0为终端交互模式（流量监控），1为命令行模式（可以观测协议本身）
 
 int main(int argc, char **argv) {
     pcap_if_t* alldevs; // 存储所有设备的链表
     char errbuf[PCAP_ERRBUF_SIZE]; // 用于存放错误信息的缓冲区
+
+    if (argc > 1) { // 网络抓包模式切换
+        commod = atoi(argv[1]);
+    }
 
     // 获取所有可用的网络设备
     if (pcap_findalldevs(&alldevs, errbuf) == -1) {

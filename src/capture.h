@@ -16,7 +16,22 @@
 #include <errno.h>
 #include <string.h>
 
-// TCP层数据包格式
+// IP层头部结构体格式
+typedef struct {
+    int header_len:4;
+    int version:4;
+    u_char tos:8;
+    int total_len:16;
+    int ident:16;
+    int flags:16;
+    u_char ttl:8;
+    u_char proto:8;
+    int checksum:16;
+    u_char sourceIP[4];
+    u_char destIP[4];
+} IPHEADER;
+
+// TCP层头部结构体格式
 typedef struct {
     u_short src_port;
     u_short dst_port;
@@ -38,7 +53,7 @@ typedef struct {
     u_short urgent_ptr;
 } TCPOPTIONS, TCPHEADER;
 
-// UDP层数据包格式
+// UDP层头部结构体格式
 typedef struct {
     u_short src_port;
     u_short dst_port;
@@ -46,9 +61,21 @@ typedef struct {
     u_short checksum;
 } UDPOPTIONS, UDPHEADER;
 
+// DNS头部结构体格式
+typedef struct {
+    u_short id;
+    u_short flags;
+    u_short qdcount;
+    u_short ancount;
+    u_short nscount;
+    u_short arcount;
+} DNSHEADER;
+
 extern int packet_count;  // 定义一个全局变量来计数数据包
 extern int tcp_packet_count;  
 extern int udp_packet_count;  
+extern int dns_packet_count;
+extern int commod;
 
 // 自定义比较器
 struct Compare {

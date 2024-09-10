@@ -27,9 +27,9 @@ void Display::update_display() {
         // 更新ncurses窗口
         wclear(win);
 
-        mvwprintw(win, 20, 10, "High frequency IP:");
+        mvwprintw(win, 10, 40, "High frequency IP:");
 
-        int i = 20;
+        int i = 10;
 
         // for (auto &it:Capture::sourMap) {
         //     mvwprintw(win, ++i, 10, "Source IP:%s    Num:%d", it.first.c_str(), it.second);
@@ -47,7 +47,7 @@ void Display::update_display() {
         // 选出top5高频访问的ip地址
         while (!Capture::heap.empty() && count < 5) {
             auto it = Capture::heap.top();
-            mvwprintw(win, ++i, 10, "Source IP:%s    Num:%d", it.first.c_str(), it.second);
+            mvwprintw(win, ++i, 40, "Source IP:%s    Num:%d", it.first.c_str(), it.second);
             Capture::heap.pop();
             count++;
         }
@@ -58,6 +58,9 @@ void Display::update_display() {
 
         mvwprintw(win, 1, 1, "Network traffic monitoring terminal");
         mvwprintw(win, 10, 1, "Total packets captured: %d", packet_count);
+        mvwprintw(win, 11, 1, "Tcp packets captured: %d", tcp_packet_count);
+        mvwprintw(win, 12, 1, "Udp packets captured: %d", udp_packet_count);
+        mvwprintw(win, 13, 1, "Dns packets captured: %d", dns_packet_count);
 
         wrefresh(win);
 

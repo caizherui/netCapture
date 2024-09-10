@@ -10,6 +10,8 @@
 extern int packet_count;
 extern int tcp_packet_count;  
 extern int udp_packet_count;  
+extern int dns_packet_count;
+extern int commod;
 
 class Display {
 public:
